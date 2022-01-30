@@ -1,0 +1,137 @@
+=======================================================
+===== Project Plan - Details =====
+=======================================================
+
+Goal: Have nanobots create any object.
+
+===== Legend =====
+!!!     : Immidiate Question on design, whether this is acceptable or not
+???     : No clue how this looks at the moment
+>>>     : Leading abstract question
+>>      : Answer to leading abstract question
+-       : A more "concrete" answer or design idea or point
+
+=======================================================
+===== Nanobot =====
+=======================================================
+
+>>> What is a nanobot?
+
+>> A tiny 'robot' that will execute simple commands.
+- The shape should be something that can tile 3D space.
+    - Tirangle, Cube, Hexagon, ext.
+        - Hexegon I believe is the most structurally sound.
+        - However for simplicity lets use a cube for now.
+- Components (Assumed hardware)
+    - "feet" to move
+    - Locking mechanism to lock with other nanobots
+!!! - Network reciver/transmitter (i.e. wifi/radio)
+        - There could also be a physical "wire" of nanobots
+!!! - Factory to replicate itself
+        - Maybe this just isn't possible ever, so maybe a controller or a "factory" is needed to create nanobots.
+            - The factory blueprint itself could be created by nanobots
+    - Battery (Power) : By design this should be a small amount (don't want runaway nanobots)
+!!!     - only be enough to execute 1-5 commands before failing
+        - MUST have a power source
+        - The controller or a power source is needed for nanobots to work
+        - Nanobots should need power to lock/unlock, but would otherwise not influence it
+- Commands are what the nanobot is capable of doing.
+    - Moving (Position, Orientation)
+        - Input: A direction and distance (Vector)
+        - Output:
+            - "Command recieved" (Conformation after getting command - Reliabillity)
+            - "Command failed" (Command wasn't executed for some reason (such as it was locked))
+            - "Command Finished" (Command was successfully completed, and is waiting for a new one)
+        - Will need to know its percieved coordinates and orientation relative to the nanobot controller.
+            - This could be inacurate for a multitude of reasons (i.e. someone physically moved it).
+        - Requirements:
+            - Cannot be locked
+            - Is powered
+    - Replicating itself
+!!!     - Input: Maybe the blueprint
+        - Output:
+            - "Command Recieved" (Conformation)
+            - "Command failed"
+            - "Command Finished"
+        - Will need to know the blueprint of itself.
+            - Is this stored in the nanobot itself, or does the controller just send it over some network.
+        - Requirements:
+!!!         - Can/Cannot be locked
+            - Is powered
+    - Locking
+        - Input: Nothing
+        - Output:
+            - "Command Recieved"
+            - "Command Failed"
+            - "Command Finished"
+        - Requirements:
+            - There are adjacent nanobots to lock with
+            - Adjacent nanobots must be touching faces, and faces are parallel
+        - Will need to know whether it is locked or Nothing
+- Security (???)
+    - Conerns
+        - What happens if malicous actor sends commands to nanobots
+        - What happens if a differant and or malicious controller sends commands
+            - Differant from a distributed system of controllers on the same side
+        - What happens if nanobots construct a power source and go rogue
+    - Nanobots need a authorization token or password or something for verifying the authenticity of commands recieved
+        - A physical connection could work (literla wire of nanobots)
+            - This however means another controller could connect to said wire
+
+=================================================
+===== Nanobot Controller =====
+=================================================
+
+>>> What is a nanobot controller?
+
+>> A structure that is able to communicate and assign tasks/commands to nanobots.
+>> The 'brain' of the whole system
+- Ideally this would also be made of nanobots, but the initial structure can be a simple cube
+- Components (Assumed hardware)
+    - To be honest anything I want, this doesn't really have any restrictions
+    - Power, network, factory, etc.
+    - Eventually a "controller" blueprint should be made, and the dependenceis would be these components that nanobots would need to construct
+- Nanobot management
+    - Should be able to keep track of every nanobot
+??? - What is needed for nanobot information
+
+=======================================================
+===== Nanobot Controller to Nanobot Communication =====
+=======================================================
+
+>>> What is this?
+
+>> The protocal or description or design on how a controller and nanobot communicate
+- Either a wireless connection, or some sort of physical nanobot wire that is created on the spot
+    - The wire could help with transfering power, keeping track of and verifying nanobot positions, and 
+- If the 'load' of one controller is too much for the supposed 'thousands' of nanobots then making more controllers is necessary
+    - This will mean a controller distributed network system, this makes things more complicated
+
+=======================================================
+===== Blueprints =====
+=======================================================
+
+>>> What is a blueprint?
+
+>> A set of points where nanobots go and lock together in order to construct the object defined
+>> Blueprints should also be able to be comprised of other blueprints, IOW: 'dependencies'
+
+- Stored information
+    - Origin/center of the object
+    - Orientation of the object
+    - The set of positions and orientations where nanobots should be
+!!!     - May need to also know if certain nanobots are locked with others or not (maybe it can be assumed they will lock at the end)
+    - Dependency blueprints
+- Procedure for creating blueprint:
+    - First construct dependencies
+    - Seoncd construct main blueprint
+- Structure
+    - Could probably be a type of tree, where nodes are the blueprints
+    - Origins and orientation will depend on it's parent
+!!! - Use 'abstract class' in order to easily use differant blueprints?
+        - Perhaps an interface, needs to be explored more when actually coding for the easiest approach to creating blueprints
+
+=======================================================
+===== Considerations =====
+=======================================================
+
