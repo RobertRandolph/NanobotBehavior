@@ -1,0 +1,180 @@
+// Status: Under Development
+
+// Necessary Parts:
+// Nanobot: Completed
+// NanobotController: Working
+// Blueprint: Waiting
+
+// Possible Parts:
+// NanobotInformation: Unknown
+// BlueprintInformation: Unknown
+
+
+
+Class Nanobot:
+    // ===== Fields =====
+    // The nanobot object
+    Gameobject NanobotPrefab
+
+    // The controller of THIS nanobot
+    NanobotController nanobotController
+
+    // Flag to move object
+    bool isMoving
+
+    // Flag for nanobot controller to know that this nanobot is doing something
+    public isExecutingCommand
+
+    // Flag for whether THIS nanobot is locked
+    bool isLocked
+
+    // Targets for moving command
+    Vector3 targetCoordinates
+    Quaternian targetOrientation
+
+    // Constants for speed
+    float moveSpeed = 12f
+    flaot rotateSpeed = 12f
+
+
+
+    // ===== Methods =====
+    // Comes with unity
+    void FixedUpdate()
+    {
+        if (isMoving && !isLocked)
+        {
+            if (Transform.xyz = targetCoordinates && Transform.Orientation = targetOrientation)
+            {
+                isMoving = False
+                isExecutingCommand = False
+                return
+            }
+
+            // Ensure not to overshoot etc
+            Transform.xyz += moveSpeed
+            transform.rotatoin += rotateSpeed
+
+        }
+    }
+
+    // Will move to the given coordinates and rotation to the given orientation
+    void move(Vector3 Coordiantes, Quaternian Orientation)
+    {
+        isExecutingCommand = true
+        targetCoordinates = coordinates
+        targetOrientation = Orientation
+        isMoving = true
+    }
+
+    // Instantiates a new nanobot and notifies controller
+    void replicate()
+    {
+        isExecutingCommand = true
+        newNanobot = Instantiate(NanobotPrefab)
+        nanobotController.registerNanobot(newNanobot)
+        isExecutingCommand = false  // This is actually pointless here since i'm not doing async yet
+    }
+
+    // Will use rays to find adjacent nanobots to lock with
+    // When locked nanobot can't move
+    void lock()
+    {
+        - Find adjacent nanobots
+        - Lock with nanobots that are 'touching' and 'orientated' correctly (that is parallel)
+        - notify any nanobots that were locked
+    }
+
+
+
+Class NanobotController:
+    // ===== Fields =====
+    // The nanobot object
+    Gameobject NanobotPrefab
+
+    // The nanobots that the controller knows about
+    // Instead of the nanobot reference itself, maybe it will go to a struct with necessary info on nanobot (including it's reference)
+        - This depends more on how the blueprint will be structured and how the controller will use it
+    Set<Nanobot> avaliableNanobots
+
+    // Blueprints to create
+    Queue<Blueprint> blueprintToCreate
+    Blueprint currentBlueprint = null
+
+    // Keep track of the blueprints created and the nanobots that are composed of it
+    // Maybe not a literal list of blueprints, but blueprint info???
+    list<Blueprints> blueprintsCreated
+
+    // Constants for nanobot thresholds
+    int minimumNanobots
+    float percentageToReplicate
+    float percentageToMove
+
+    // May Be necessary for keeping track of nanobots
+    // Not sure if a list is necessary
+    - replicatingNanobotsCount
+    - movingNanobotsCount
+    - etc
+
+
+
+
+
+    // ===== Methods =====
+    // Method form unity
+    // Note: this may not be the best place for this - will mess around with it in unity
+    void FixedUpdate()
+    {
+        - Check if blueprint is being made, and if not, get one from queue if avaliable
+        - If blueprint is being made
+            - if no nanobots are avaliable then create one
+            - assignNanobots()
+        - otherwise remain idle (at this point the program is done for now) 
+    }
+
+    // Creates a nanobot
+    void createNanobot()
+    {
+        newNanobot = Instantiate(NanobotPrefab)
+        registerNanobot(newNanobot)
+    }
+
+    // Registers a nanobot to THIS controller
+    void registerNanobot(Nanobot newNanobot)
+    {
+        // Note may be nanobot information itself
+        avaliableNanobots.add(newNanobot)
+    }
+
+    void assignNanobots()
+    {
+        // Note: This will be slow since not doing async yet
+        - Create nanobots till minimum threshold (or until necessary amount for BP is met)
+        - assign % of nanobots to replicate (if necessary)
+        - Move nanobots
+        - Lock nanobots when nanobot reaches destination
+        - if nanobots are all locked (that is BP is completed)
+            - currentBlueprint = null
+    }
+
+
+
+    Struct nanobotInformation
+    {
+        // May be necessary
+
+        // Fields
+        - unique ID
+        - NanobotReference
+        - Status
+    }
+
+
+
+// Notes:
+    - Unsure of whether to use an abstract class, composite class, interface, etc
+        - Just got to experiment here for something that is easy to use
+Class Blueprint
+    // ===== Fields =====
+
+    // ===== Methods =====

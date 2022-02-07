@@ -1,0 +1,23 @@
+>>> How the program should act from start to finish
+
+01) Program Starts:
+02) Nanobot Controller (NC) checks whether a blueprint (BP) needs to be created
+	- If BP DOES NOT need to be created -> Idle (basically wait for BP)
+	- Otherwise -> (03)
+03) BP needs to be created
+04) If there are no avaliable nanobots -> NC Creates one
+	- Otherwise continue
+05) NC Commands nanobots to replicate until a minimum threshold is met (i.e. there are at least 10 nanobots)
+06) NC commands % of nanobots to replicate, and the rest to move/lock (to create BP object)
+	- nanobots replicate until there is enough for the blueprint (and any support structures if necessary)
+		- Support is temporary (i.e. physical line for nanobots to move)
+07) After BP is finished and locked, nanobots are (removed) from avaliable nanobots the NC can use.
+	- Things to keep in mind here:
+		- Perhaps it keeps track of the structures it's created, and if necessary, can connect to the created object for repairs and command replications and so on.
+08) Go to next BP if there is another
+
+Notes:
+	- Ideally the controller would be able to work on multiple BP's at the same time
+	- Lots of async tasks
+	- Near the end can create a way for a 'user' to add BP's to the NC
+		- For now, this is more a simulation outside of user action

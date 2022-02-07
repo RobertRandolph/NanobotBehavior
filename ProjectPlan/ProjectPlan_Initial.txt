@@ -135,3 +135,7 @@ Goal: Have nanobots create any object.
 ===== Considerations =====
 =======================================================
 
+- This document is more an 'ideal' or 'final' implementation on how things should work
+    - This will change a lot
+    - This is used as a guide
+    - Many notes, and ideas and such will be recorded here
