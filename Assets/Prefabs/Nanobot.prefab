@@ -108,3 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f74ed4dbb5dce4399261ba9a44954e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nanobotPrefab: {fileID: 429601652179576813}
+  speed: 12
+  replicationTimeSec: 5
+  targetPosition: {x: 10, y: 10, z: 10}
+  targetTime: 0
