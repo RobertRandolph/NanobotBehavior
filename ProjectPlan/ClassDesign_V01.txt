@@ -159,22 +159,41 @@ Class NanobotController:
 
 
 
-    Struct nanobotInformation
-    {
-        // May be necessary
-
-        // Fields
-        - unique ID
-        - NanobotReference
-        - Status
-    }
+Struct nanobotInformation
+{
+    // ===== Fields =====
+    - unique ID
+    - NanobotReference
+    - Status
+    - relatedBlueprint
+}
 
 
 
 // Notes:
-    - Unsure of whether to use an abstract class, composite class, interface, etc
-        - Just got to experiment here for something that is easy to use
+    - blueprint will contain all the positions and orientations (transforms) of where the nanobots should be
 Class Blueprint
     // ===== Fields =====
+    - list<Transform> nanobotTargets
+    - targetCenter (the relative position to the nanobot targets)
+    - list<blueprint> dependencies (tree structure) 
+        >> Will complete leaves of the tree first
+    - totalDependencies (number of dependecies of the whole tree [going down]) - could be useful
 
     // ===== Methods =====
+
+
+
+// Notes:
+    - The blueprint data will be all the necessary 'variable' bits of the blueprint that need to be used
+    - Will also include the literal blueprint itself
+Struct BlueprintData
+    // ===== Fields =====
+    - Unique ID
+    - Blueprint reference (the literal blueprint to construct)
+    - Status
+    - relatedNanobotsIds (apart of blueprint)
+    - Blueprint position (blueprint position in world - relative to nanobotcontroller)
+    - Blueprint orientation (blueprint orientation in world - relative to nanobotcontroller)
+    - current blueprint tree (where you are in the blueprint tree)
+

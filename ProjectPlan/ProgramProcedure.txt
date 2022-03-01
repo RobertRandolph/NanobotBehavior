@@ -1,5 +1,7 @@
 >>> How the program should act from start to finish
 
+===== Overview =====
+
 01) Program Starts:
 02) Nanobot Controller (NC) checks whether a blueprint (BP) needs to be created
 	- If BP DOES NOT need to be created -> Idle (basically wait for BP)
@@ -21,3 +23,4 @@ Notes:
 	- Lots of async tasks
 	- Near the end can create a way for a 'user' to add BP's to the NC
 		- For now, this is more a simulation outside of user action
+

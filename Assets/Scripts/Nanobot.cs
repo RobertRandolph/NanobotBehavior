@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Nanobot : MonoBehaviour {
@@ -16,11 +14,13 @@ public class Nanobot : MonoBehaviour {
     [SerializeField] Vector3 targetPosition;
     [SerializeField] float targetTime;
 
+    // Init & Testing
     void Start() {
+        // Init
+
         // Testing
         // MoveCommand(targetPosition);
-        ReplicateCommand();
-
+        // ReplicateCommand();
     }
 
     void FixedUpdate() {
@@ -46,7 +46,7 @@ public class Nanobot : MonoBehaviour {
     /// Command recieved from the nanobot controller to replicate itself.
     /// Sets the target time based on the replicationTimeSec field.
     /// </summary>
-    void ReplicateCommand() {
+    public void ReplicateCommand() {
         isReplicating = true;
         targetTime = Time.time + replicationTimeSec;
     }
